@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+
+   <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class='bx bxl-c-plus-plus icon'></i>
+          <div class="logo_name">ClaimNow</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="employee.html">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Overview</span>
+          </a>
+           <span class="tooltip">Overview</span>
+        </li>
+        <li>
+         <a href="submitclaim.html">
+           <i class='bx bx-edit-alt' ></i>
+           <span class="links_name">Submit Claim</span>
+         </a>
+         <span class="tooltip">Submit Claim</span>
+       </li>
+       <li>
+         <a href="history.html">
+           <i class='bx bx-history' ></i>
+           <span class="links_name">Claim History</span>
+         </a>
+         <span class="tooltip">Claim History</span>
+       </li>   
+  
+       <li>
+          <a href="notifications.html">
+            <i class='bx bx-bell' ></i>
+            <span class="links_name">Notifications</span>
+          </a>
+          <span class="tooltip">Notifications</span>
+        </li> 
+        
+       <li class="profile">
+           <div class="profile-details">
+             <!--<img src="profile.jpg" alt="profileImg">-->
+             <div class="name_job">
+               <div class="name">Username</div>
+               <div class="job">Designation</div>
+             </div>
+           </div>
+           <i class='bx bx-log-out' id="log_out" ></i>
+       </li>
+      </ul>
+    </div>
+  
+    <div class="home-section">
+      <h1>Submit a Claim</h1>
+    </div>
+    
+    <div class="container">
+      <h3>Claim Category</h3>
+        <div class="select-box">
+         <div class="options-container">
+          <div class="option">
+            <input
+              type="radio"
+              class="radio"
+              id="Claim_category"
+              name="Claim_category"
+            />
+      
+          <label for="Claim_category"></label>
+          </div>   
+              <div class="option">
+                <input type="radio" class="radio" id="entertainment" name="Claim_category" />
+                <label for="entertainment">Entertainment</label>
+              </div>
+
+              <div class="option">
+                <input type="radio" class="radio" id="flight" name="Claim_category" />
+                <label for="flight">Flight</label>
+              </div>
+
+              <div class="option">
+                <input type="radio" class="radio" id="hotel" name="Claim_category" />
+                <label for="hotel">Hotel</label>
+              </div>
+
+              <div class="option">
+                <input type="radio" class="radio" id="transportation" name="Claim_category" />
+                <label for="transportation">Transportation</label>
+              </div>
+        </div>
+        
+        <div class="selected">
+          Select Expense Type
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="Start Typing..." />
+        </div>
+
+      </div> 
+      <br>   
+      
+      <h3>Claim Date</h3>  
+      <div class="select-box">
+          <input type="date" id="date">
+      </div>  
+      <br>
+
+      <h3>Currency Code</h3>  
+      <div class="select-box">
+          <input type="text" maxlength="3" id="curr_code">
+      </div> 
+      <br>    
+
+      <h3>Expense Amount (Foreign Currency)</h3>  
+      <div class="select-box">
+          <input type="number" id="amt_for">
+      </div> 
+      <br>      
+
+      <h3>Expense Amount (SGD)</h3>  
+      <div class="select-box">
+          <input type="number" id="amt_sgd">
+      </div> 
+      <br> 
+
+      <script src="submit.js"></script> 
+      <h3>Claim Description</h3>
+      <div class="wrapper">
+        <textarea spellcheck="true" placeholder="Type something here..." required></textarea>
+      </div>
+      <br>
+      <div class="button">
+        <a href="#" class="btn">Submit Claim</a>
+      </div>
+  </div>
+
+  <div class="wrapper2">
+    
+    <header>Currency Converter</header>
+    <form action="#">
+      <div class="amount">
+        <p>Enter Amount</p>
+        <input type="number">
+      </div>
+      <div class="drop-list">
+        <div class="from">
+          <p>From</p>
+          <div class="select-box2">
+            <img src="https://flagcdn.com/48x36/us.png" alt="flag">
+            <select> <!-- Options tag are inserted from JavaScript --> </select>
+          </div>
+        </div>
+        <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+        <div class="to">
+          <p>To</p>
+          <div class="select-box2">
+            <img src="https://flagcdn.com/48x36/sg.png" alt="flag">
+            <select> <!-- Options tag are inserted from JavaScript --> </select>
+          </div>
+        </div>
+      </div>
+      <div class="exchange-rate">Getting exchange rate...</div>
+      <button>Get Exchange Rate</button>
+    </form>
+
+  </div>
+  <script src="currency.js"></script> 
+    <script src="currency2.js"></script> 
+  <!--Script for function-->
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("open");
+        menuBtnChange();//calling the function(optional)
+    });
+
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+    if(sidebar.classList.contains("open")){
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    }else {
+        closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+    }
+    }
+    </script>
+    
+</body>
+</html>

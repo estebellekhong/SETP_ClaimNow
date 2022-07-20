@@ -1,8 +1,10 @@
-const container = document.querySelector(".container"),
-      pwShowHide = document.querySelectorAll(".showHidePw"),
-      pwFields = document.querySelectorAll(".password"),
-      signUp = document.querySelector(".signup-link"),
-      login = document.querySelector(".login-link");
+const container         = document.querySelector(".container"),
+      pwShowHide        = document.querySelectorAll(".showHidePw"),
+      pwFields          = document.querySelectorAll(".password"),
+      signUp            = document.querySelector(".signup-link"),
+      login             = document.querySelector(".login-link");
+    
+
 
     //   js code to show/hide password and change icon
     pwShowHide.forEach(eyeIcon =>{
@@ -24,6 +26,28 @@ const container = document.querySelector(".container"),
             }) 
         })
     })
+
+    $(document).ready(function()
+{
+     $("Login").click(myFunction);
+
+});
+
+function myFunction()
+{
+
+$.ajax({
+    url: "login.py",
+    type: "post",
+    datatype: "data",
+    data: {name: $("user_id").val(), pass: $("user_password").val()},
+    success: function(response){
+        console.log(response.message);
+        console.log(response.keys);
+        console.log(response.data);
+    }
+ });
+}
 
     // js code to appear signup and login form
     signUp.addEventListener("click", ( )=>{
