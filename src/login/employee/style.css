@@ -298,11 +298,6 @@
   transition: all 0.5s ease;
 }
 
-.sidebar.open ~ .wrapper2 {
-  left: 850px;
-  width: 370px;
-  transition: all 0.5s ease;
-}
 
 .container{
   display: inline-block;
@@ -427,7 +422,7 @@
   height: 75px;
   outline: none;
   padding: 10px;
-  font-size: 12px;
+  font-size: 14px;
   border-radius: 5px;
   max-height: 330px;
   caret-color: #4671EA;
@@ -468,105 +463,34 @@
 
 /*===================Currency Converter============ */
 
-::selection{
-  background: #5352ed;
-  color: #fff;
-}
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin-left: 30%;
-}
+
+
 .wrapper2{
-  width: 100%;
-  max-width: 400px;
+  width:450px;
   padding: 20px;
-  background: #fff;
-  border-radius: 8px;
+  background: linear-gradient(to bottom, rgba(0, 155, 198, 0.3), rgba(255, 115, 243, 0.3));
+  backdrop-filter: blur(3px);
+  border-radius: 15px;
   box-shadow: 0 4px 4px rgba(0,0,0,0.2);
-  position: relative;
-}
+  position: absolute;
+  margin-left: 850px;
+  margin-top: 250px;
+ }
 
-.wrapper2 .col .text{
-  font-size: 28px;
-  text-align: center;
-  font-weight: 500;
-}
-.wrapper2 .col .s6{
-  margin-top: 30px;
-}
-.wrapper2 .col .s6 .sm{
-  font-size: 15px;
-  margin-bottom: 10px;
-  font-weight: 500;
-  padding-left: 2px;
-}
-.wrapper2 .col .s6 input{
-  width: 100%;
-  height: 45px;
-  border: 2px solid #bfbfbf;
-  outline: none;
-  border-radius: 4px;
-  padding-left: 10px;
-  font-size: 18px;
-  transition: all 0.4s ease;
-}
-.wrapper2 .col .s6 input:focus{
-  border-color: #4834d4;
-}
-.wrapper2 .col .s6 .transfer{
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-.wrapper2 .col .s6 .transfer .icon span{
-  font-size: 28px;
-  color: #2f3542;
-}
-.wrapper2 .col .s6 .transfer .select-text{
-  width: 90px;
-  height: 35px;
-  padding-left: 6px;
-  outline: none;
-  border: 2px solid #bfbfbf;
-  border-radius: 5px;
-}
-.wrapper2 .col .s6 .transfer .select-text:focus{
-  border-color: #4834d4;
-}
-.wrapper2 .col .s6 .button{
-  margin-top: 20px;
-}
-
-.wrapper2 .col .s6 .s2{
-  margin-top: 20px;
-}
-.wrapper2 .col .s6 .s2 .conversion{
-  font-size: 20px;
-}
-
-*,*:after,*:before{
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-}
 body{
 	font-family: arial;
 	font-size: 16px;
 	margin: 0;
 	color: rgb(0, 0, 0);
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
+
+	
 }
 
-h1{
+.CurrencyHeader{
 	font-size: 48 px;
 	text-align: center;
+  padding: 10px;
 }
 .row{
 	display: flex;
@@ -580,7 +504,7 @@ select,
 input{
 	width: 100%;
 	margin-bottom: 15px;
-	font-size: 20px;
+	font-size: 18px;
 	padding:8px 15px;
 	font-weight: 700
 }
@@ -601,7 +525,6 @@ button{
 	border:0;
 	cursor: pointer;
 }
-
 
 
 /*=================History Table Section==================*/

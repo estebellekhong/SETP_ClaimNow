@@ -83,28 +83,28 @@
         <h3>Claim Date</h3> 
           <input type="date" id="date" name="date">
       </div>  
-      <br>
+      
 
        
       <div class="select-box">
         <h3>Currency Code</h3> 
           <input type="text" maxlength="3" id="curr_code" name="curr_code">
       </div> 
-      <br>    
+        
 
       
       <div class="select-box">
         <h3>Expense Amount (Foreign Currency)</h3>  
-          <input type="number" id="amt_for" name="amt_for">
+          <input type="number" id="amt_forex" name="amt_forex">
       </div> 
-      <br>      
+          
 
       
       <div class="select-box">
         <h3>Expense Amount (SGD)</h3>  
           <input type="number" id="amt_sgd" name="amt_sgd">
       </div> 
-      <br> 
+      
 
       
       <div class="select-box">
@@ -123,17 +123,19 @@
 
   <!------------------------------------------Currency Converter------------------------------------------>
   <div class="wrapper2">
-    <h1>Currency Converter</h1>
-      <div class="row">
-        <div class="col">
-        <select name="currency" class="currency"> 
+    <div class="CurrencyHeader">
+      <h1>Currency Converter</h1>
+      </div>
+        <div class="row">
+          <div class="col">
+            <select name="currency" class="currency"> 
         	<option>select</option>
         </select>
         <input type="text" name="" id="input_currency">
       </div>
       <div class="col">
         <select name="currency" class="currency">
-        	<option>select</option>
+        	<option>SGD</option>
         </select>
         <input type="text" name="" id="output_currency" disabled>
       </div>
@@ -141,6 +143,7 @@
     <button onClick="convert()">Convert</button>
 </div>
 
+<!--------------------------------------Currency Coverter Script---------------------------------------------->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 var select = document.querySelectorAll(".currency"),
