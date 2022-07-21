@@ -8,7 +8,8 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 
-   <body>
+   <!------------------------------------------Side bar------------------------------------------->
+   <body class="loggedin">
     <div class="sidebar">
       <div class="logo-details">
         <i class='bx bxl-c-plus-plus icon'></i>
@@ -59,123 +60,155 @@
       </ul>
     </div>
   
+  <!------------------------------------------Submit Claim Box------------------------------------------>
     <div class="home-section">
       <h1>Submit a Claim</h1>
     </div>
     
     <div class="container">
-      <h3>Claim Category</h3>
-        <div class="select-box">
-         <div class="options-container">
-          <div class="option">
-            <input
-              type="radio"
-              class="radio"
-              id="Claim_category"
-              name="Claim_category"
-            />
+      <form action="/claimnow_dev/submitclaim" method="post">
       
-          <label for="Claim_category"></label>
-          </div>   
-              <div class="option">
-                <input type="radio" class="radio" id="entertainment" name="Claim_category" />
-                <label for="entertainment">Entertainment</label>
-              </div>
+        <h3>Claim Category</h3>
+          <div class="select-box">
+            <select id="Claim_category" name="Claim_category">
+              <option value="Entertainment">Entertainment</option>
+              <option value="Flight">Flight</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Transportation">Transportation</option>
+            </select> 
+          </div>
 
-              <div class="option">
-                <input type="radio" class="radio" id="flight" name="Claim_category" />
-                <label for="flight">Flight</label>
-              </div>
-
-              <div class="option">
-                <input type="radio" class="radio" id="hotel" name="Claim_category" />
-                <label for="hotel">Hotel</label>
-              </div>
-
-              <div class="option">
-                <input type="radio" class="radio" id="transportation" name="Claim_category" />
-                <label for="transportation">Transportation</label>
-              </div>
-        </div>
-        
-        <div class="selected">
-          Select Expense Type
-        </div>
-        <div class="search-box">
-          <input type="text" placeholder="Start Typing..." />
-        </div>
-
-      </div> 
-      <br>   
-      
-      <h3>Claim Date</h3>  
+              
       <div class="select-box">
-          <input type="date" id="date">
+        <h3>Claim Date</h3> 
+          <input type="date" id="date" name="date">
       </div>  
       <br>
 
-      <h3>Currency Code</h3>  
+       
       <div class="select-box">
-          <input type="text" maxlength="3" id="curr_code">
+        <h3>Currency Code</h3> 
+          <input type="text" maxlength="3" id="curr_code" name="curr_code">
       </div> 
       <br>    
 
-      <h3>Expense Amount (Foreign Currency)</h3>  
+      
       <div class="select-box">
-          <input type="number" id="amt_for">
+        <h3>Expense Amount (Foreign Currency)</h3>  
+          <input type="number" id="amt_for" name="amt_for">
       </div> 
       <br>      
 
-      <h3>Expense Amount (SGD)</h3>  
+      
       <div class="select-box">
-          <input type="number" id="amt_sgd">
+        <h3>Expense Amount (SGD)</h3>  
+          <input type="number" id="amt_sgd" name="amt_sgd">
       </div> 
       <br> 
 
-      <script src="submit.js"></script> 
-      <h3>Claim Description</h3>
-      <div class="wrapper">
-        <textarea spellcheck="true" placeholder="Type something here..." required></textarea>
+      
+      <div class="select-box">
+        <h3>Claim Description</h3>
+          <div class="wrapper">
+            <textarea spellcheck="true" placeholder="Type something here..." required></textarea>
+        </div>
       </div>
       <br>
       <div class="button">
         <a href="#" class="btn">Submit Claim</a>
       </div>
-  </div>
-
-  <div class="wrapper2">
-    
-    <header>Currency Converter</header>
-    <form action="#">
-      <div class="amount">
-        <p>Enter Amount</p>
-        <input type="number">
-      </div>
-      <div class="drop-list">
-        <div class="from">
-          <p>From</p>
-          <div class="select-box2">
-            <img src="https://flagcdn.com/48x36/us.png" alt="flag">
-            <select> <!-- Options tag are inserted from JavaScript --> </select>
-          </div>
-        </div>
-        <div class="icon"><i class="fas fa-exchange-alt"></i></div>
-        <div class="to">
-          <p>To</p>
-          <div class="select-box2">
-            <img src="https://flagcdn.com/48x36/sg.png" alt="flag">
-            <select> <!-- Options tag are inserted from JavaScript --> </select>
-          </div>
-        </div>
-      </div>
-      <div class="exchange-rate">Getting exchange rate...</div>
-      <button>Get Exchange Rate</button>
     </form>
-
   </div>
-  <script src="currency.js"></script> 
-    <script src="currency2.js"></script> 
-  <!--Script for function-->
+  <script src="submit.js"></script> 
+
+  <!------------------------------------------Currency Converter------------------------------------------>
+  <div class="wrapper2">
+    <h1>Currency Converter</h1>
+      <div class="row">
+        <div class="col">
+        <select name="currency" class="currency"> 
+        	<option>select</option>
+        </select>
+        <input type="text" name="" id="input_currency">
+      </div>
+      <div class="col">
+        <select name="currency" class="currency">
+        	<option>select</option>
+        </select>
+        <input type="text" name="" id="output_currency" disabled>
+      </div>
+    </div>
+    <button onClick="convert()">Convert</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+var select = document.querySelectorAll(".currency"),
+input_currency = document.getElementById('input_currency'),
+output_currency = document.getElementById('output_currency');
+
+fetch(`https://api.frankfurter.app/currencies`)
+  .then((data) => data.json())
+  .then((data) => {
+    const entries = Object.entries(data);
+    console.log(data)
+	  for (var i = 0; i < entries.length; i++) {
+	    select[0].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+	    select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+	  }
+   	
+});
+
+function convert(){
+ 	input_currency_val = input_currency.value;
+ 	if(select[0].value != select[1].value ){
+ 		const host = 'api.frankfurter.app';
+		fetch(`https://${host}/latest?amount=${input_currency_val}&from=${select[0].value}&to=${select[1].value}`)
+		  .then((val) => val.json())
+    	.then((val) => {
+		    //alert(`10 GBP = ${data.rates.USD} USD`);
+		    output_currency.value = Object.values(val.rates)[0]
+		    console.log(Object.values(val.rates)[0])
+		});
+ 	}else{
+ 		alert("Peease select two different currencies")
+ 	}
+}
+var select = document.querySelectorAll(".currency"),
+input_currency = document.getElementById('input_currency'),
+output_currency = document.getElementById('output_currency');
+
+fetch(`https://api.frankfurter.app/currencies`)
+  .then((data) => data.json())
+  .then((data) => {
+    const entries = Object.entries(data);
+    console.log(data)
+	  for (var i = 0; i < entries.length; i++) {
+	    select[0].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+	    select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+	  }
+   	
+});
+
+function convert(){
+ 	input_currency_val = input_currency.value;
+ 	if(select[0].value != select[1].value ){
+ 		const host = 'api.frankfurter.app';
+		fetch(`https://${host}/latest?amount=${input_currency_val}&from=${select[0].value}&to=${select[1].value}`)
+		  .then((val) => val.json())
+    	.then((val) => {
+		    //alert(`10 GBP = ${data.rates.USD} USD`);
+		    output_currency.value = Object.values(val.rates)[0]
+		    console.log(Object.values(val.rates)[0])
+		});
+ 	}else{
+ 		alert("Peease select two different currencies")
+ 	}
+}
+</script>
+
+
+  <!--------------------------------------Script for Function------------------------------------------>
   <script>
     let sidebar = document.querySelector(".sidebar");
     let closeBtn = document.querySelector("#btn");
