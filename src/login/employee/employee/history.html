@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.14/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+   </head>
+
+
+<!--Nav Icon & Menu-->
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus icon'></i>
+        <div class="logo_name">ClaimNow</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="employee.html">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Overview</span>
+        </a>
+         <span class="tooltip">Overview</span>
+      </li>
+      <li>
+       <a href="submitclaim.html">
+         <i class='bx bx-edit-alt' ></i>
+         <span class="links_name">Submit Claim</span>
+       </a>
+       <span class="tooltip">Submit Claim</span>
+     </li>
+     <li>
+       <a href="history.html">
+         <i class='bx bx-history' ></i>
+         <span class="links_name">Claim History</span>
+       </a>
+       <span class="tooltip">Claim History</span>
+     </li>   
+
+     <li>
+        <a href="notifications.html">
+          <i class='bx bx-bell' ></i>
+          <span class="links_name">Notifications</span>
+        </a>
+        <span class="tooltip">Notifications</span>
+      </li> 
+      
+     <li class="profile">
+         <div class="profile-details">
+           <!--<img src="profile.jpg" alt="profileImg">-->
+           <div class="name_job">
+             <div class="name">Username</div>
+             <div class="job">Designation</div>
+           </div>
+         </div>
+         <i class='bx bx-log-out' id="log_out" ></i>
+     </li>
+    </ul>
+  </div>
+<!------------------------ Claim History--------------------------->
+  <div class="home-section">
+    <h1>Claim History</h1>
+  </div>
+  
+  <div class="containerp-30">
+    <div class="row">
+        <div class="col-md-12 main-datatable">
+            <div class="card_body">
+                <div class="row d-flex">
+                    <div class="col-sm-4 createSegment"> 
+                     <a href='submitclaim.html'class="btn dim_button create_new"> <span class="glyphicon glyphicon-plus"></span> Create New</a>
+                    </div>
+                    <div class="col-sm-8 add_flex">
+                        <div class="form-group searchInput">
+                            <label for="email">Search:</label>
+                            <input type="search" class="form-control" id="filterbox" placeholder=" ">
+                        </div>
+                    </div> 
+                </div>
+                <div class="overflow-x">
+                    <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th style="min-width:100px;">Claim Category</th>
+                                <th style="min-width:100px;">Claim Date</th>
+                                <th style="min-width:50px;">Currency Code</th>
+                                <th style="min-width:100px;">Expense Amount (Foreign Currency)</th>
+                                <th style="min-width:100px;">Expense Amount (SGD)</th>
+                                <th style="min-width:150px;">Description</th>
+                                <th style="min-width:100px;">Status</th>
+                                <th style="min-width:150px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hotel</td>
+                                <td>13/06/2022</td>
+                                <td>TWD</td>                               
+                                <td>17500</td>
+                                <td>815.38</td>
+                                <td>Taiwan Springs</td>
+                                <td><span class="mode mode_process">Processing</span></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                        <i class="fa fa-pencil-square-o"></i> </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" target="_blank">
+                                                    Edit
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown_more">
+                                           
+                                            <li>
+                                                <a href="#" target="_black">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                                    
+                            <tr>
+                              <td>Flight</td>
+                              <td>07/06/2022</td>
+                              <td>NA</td>                               
+                              <td>NA</td>
+                              <td>750</td>
+                              <td>Fly Fast</td>
+                              <td><span class="mode mode_on">Approved</span></td>
+                              <td>
+                                  <div class="btn-group">
+                                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                      <i class="fa fa-pencil-square-o"></i> </a>
+                                      <ul class="dropdown-menu">
+                                          <li>
+                                              <a style="cursor: not-allowed; opacity:0.6">
+                                                Edit
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <div class="btn-group">
+                                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                          <i class="fa fa-ellipsis-h"></i>
+                                      </a>
+                                      <ul class="dropdown-menu dropdown_more">
+                                         
+                                          <li>
+                                              <a style="cursor: not-allowed; opacity:0.6">
+                                                  <i class="fa fa-trash"></i> Delete
+                                              </a>
+                                          </li>
+                                          
+                                      </ul>
+                                  </div>
+                              </td>
+                          </tr>
+                                 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+
+  <!--Script for function-->
+  <script src="history.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.14/js/jquery.dataTables.min.js"></script>
+  <script>
+            let sidebar = document.querySelector(".sidebar");
+            let closeBtn = document.querySelector("#btn");
+            let searchBtn = document.querySelector(".bx-search");
+
+            closeBtn.addEventListener("click", ()=>{
+                sidebar.classList.toggle("open");
+                menuBtnChange();//calling the function(optional)
+            });
+
+            searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            });
+
+            // following are the code to change sidebar button(optional)
+            function menuBtnChange() {
+            if(sidebar.classList.contains("open")){
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            }else {
+                closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+            }
+            }
+  </script>
+
+</body>
+</html>
+
