@@ -377,9 +377,9 @@
     for (let country_list in country_code) {
       let selected;
       if (i == 0) {
-        selected = country_list == "USD" ? "selected" : "";
+        selected = country_list == "SGD" ? "selected" : "";
       } else if (i == 1) {
-        selected = country_list == "USD" ? "selected" : "";
+        selected = country_list == "SGD" ? "selected" : "";
       }
       let optionTag = `<option value="${country_list}" ${selected}>${country_list}</option>`;
       droplist[i].insertAdjacentHTML("beforeend", optionTag)
