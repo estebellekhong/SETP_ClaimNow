@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='loginform.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='bg/favicon.ico') }}">
+</head>
+
+
+<body>
+	<!--Background Video-->
+	<section class="background">
+		<div class="background">
+			<video src="{{ url_for('static', filename='bg/VideoBG.mp4') }}" muted loop autoplay></video>
+		</div>
+	</section>
+
+	<!--<title>Login Form</title>-->
+	<div class="container">
+		<div class="forms">
+			<div class="form login">
+				<img src="{{ url_for('static', filename='bg/ClaimNowLogo.png') }}">
+				<span class="title">By Seven Up Club</span>
+
+				<form action="{{ url_for('login') }}" method="post">
+					<div class="input-field">
+						<input type="text" placeholder="Enter your email" required id="username" name="username">
+						<i class="uil uil-envelope icon"></i>
+					</div>
+					<div class="input-field">
+						<input type="password" class="password" placeholder="Enter your password" required id="password"
+							name="password">
+						<i class="uil uil-lock icon"></i>
+						<i class="uil uil-eye-slash showHidePw"></i>
+					</div>
+
+					<div class="checkbox-text">
+						<div class="checkbox-content">
+							<input type="checkbox" id="logCheck">
+							<label for="logCheck" class="text">Remember me</label>
+						</div>
+
+						<a href="#" class="text">Forgot password?</a>
+					</div>
+
+					<div class="input-field button">
+						<input input type="submit" value="Login">
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

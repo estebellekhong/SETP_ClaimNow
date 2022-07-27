@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile Management{% endblock %}
+
+{% block content %}
+<!------------------------------------------Submit Claim Box------------------------------------------>
+<div class="home-section">
+  <h1>Submit a Claim</h1>
+</div>
+
+<div class="container">
+  <form action="/claimnow_dev/submitclaim" method="post">
+
+    <h3>Claim Category</h3>
+    <div class="select-box">
+      <select type="text" id="Claim_category" name="Claim_category">
+        <option value="Entertainment">Entertainment</option>
+        <option value="Flight">Flight</option>
+        <option value="Hotel">Hotel</option>
+        <option value="Transportation">Transportation</option>
+      </select>
+    </div>
+
+    <div class="select-box">
+      <h3>Claim Date</h3>
+      <input type="date" id="date" name="date">
+    </div>
+
+    <div class="select-box">
+      <h3>Currency Code</h3>
+      <input type="text" maxlength="3" id="curr_code" name="curr_code">
+    </div>
+
+    <div class="select-box">
+      <h3>Expense Amount (Foreign Currency)</h3>
+      <input type="number" id="amt_forex" name="amt_forex">
+    </div>
+
+    <div class="select-box">
+      <h3>Expense Amount (SGD)</h3>
+      <input type="number" id="amt_sgd" name="amt_sgd">
+    </div>
+
+    <div class="select-box">
+      <h3>Claim Description</h3>
+      <div class="wrapper">
+        <textarea spellcheck="true" placeholder="Type something here..." required></textarea>
+      </div>
+    </div>
+    <br>
+    <div class="button">
+      <a href="#" class="btn">Submit Claim</a>
+    </div>
+  </form>
+</div>
+<script src="{{ url_for('static', filename='submit.js') }}"></script>
+
+<!------------------------------------------Currency Converter------------------------------------------>
+<div class="wrapper2">
+  <div class="CurrencyHeader">
+    <h1>Currency Converter</h1>
+  </div>
+  <div class="row">
+    <div class="col">
+      <select name="currency" class="currency">
+        <option>select</option>
+      </select>
+      <input type="text" name="" id="input_currency">
+    </div>
+    <div class="col">
+      <select name="currency" class="currency">
+        <option>SGD</option>
+      </select>
+      <input type="text" name="" id="output_currency" disabled>
+    </div>
+  </div>
+  <button onClick="convert()">Convert</button>
+</div>
+
+<!--------------------------------------Currency Coverter Script---------------------------------------------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var select = document.querySelectorAll(".currency"),
+    input_currency = document.getElementById('input_currency'),
+    output_currency = document.getElementById('output_currency');
+
+  fetch(`https://api.frankfurter.app/currencies`)
+    .then((data) => data.json())
+    .then((data) => {
+      const entries = Object.entries(data);
+      console.log(data)
+      for (var i = 0; i < entries.length; i++) {
+        select[0].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+        select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+      }
+
+    });
+
+  function convert() {
+    input_currency_val = input_currency.value;
+    if (select[0].value != select[1].value) {
+      const host = 'api.frankfurter.app';
+      fetch(`https://${host}/latest?amount=${input_currency_val}&from=${select[0].value}&to=${select[1].value}`)
+        .then((val) => val.json())
+        .then((val) => {
+          //alert(`10 GBP = ${data.rates.USD} USD`);
+          output_currency.value = Object.values(val.rates)[0]
+          console.log(Object.values(val.rates)[0])
+        });
+    } else {
+      alert("Peease select two different currencies")
+    }
+  }
+  var select = document.querySelectorAll(".currency"),
+    input_currency = document.getElementById('input_currency'),
+    output_currency = document.getElementById('output_currency');
+
+  fetch(`https://api.frankfurter.app/currencies`)
+    .then((data) => data.json())
+    .then((data) => {
+      const entries = Object.entries(data);
+      console.log(data)
+      for (var i = 0; i < entries.length; i++) {
+        select[0].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+        select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]}</option>`;
+      }
+
+    });
+
+  function convert() {
+    input_currency_val = input_currency.value;
+    if (select[0].value != select[1].value) {
+      const host = 'api.frankfurter.app';
+      fetch(`https://${host}/latest?amount=${input_currency_val}&from=${select[0].value}&to=${select[1].value}`)
+        .then((val) => val.json())
+        .then((val) => {
+          //alert(`10 GBP = ${data.rates.USD} USD`);
+          output_currency.value = Object.values(val.rates)[0]
+          console.log(Object.values(val.rates)[0])
+        });
+    } else {
+      alert("Peease select two different currencies")
+    }
+  }
+</script>
+
+
+<!--------------------------------------Script for Function------------------------------------------>
+<script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+ 
+  //searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+   // sidebar.classList.toggle("open");
+   // menuBtnChange(); //calling the function(optional)
+  //});
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+    if (sidebar.classList.contains("open")) {
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    } else {
+      closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+    }
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='bg/favicon.ico') }}">
+	<!-- Boxicons CDN Link -->
+	<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="loggedin">
+	<div class="sidebar">
+		<div class="logo-details">
+			<i class='bx bxl-c-plus-plus icon'></i>
+			<div class="logo_name">ClaimNow</div>
+			<i class='bx bx-menu' id="btn"></i>
+		</div>
+		<ul class="nav-list">
+			<li>
+				<a href="{{ url_for('home') }}">
+					<i class='bx bx-grid-alt'></i>
+					<span class="links_name">Overview</span>
+				</a>
+				<span class="tooltip">Overview</span>
+			</li>
+			<li>
+				<a href="{{ url_for('submitclaim') }}">
+
+					<i class='bx bx-edit-alt'></i>
+					<span class="links_name">Submit Claim</span>
+				</a>
+				<span class="tooltip">Submit Claim</span>
+			</li>
+			<li>
+				<a href="{{ url_for('history') }}">
+					<i class='bx bx-history'></i>
+					<span class="links_name">Claim History</span>
+				</a>
+				<span class="tooltip">Claim History</span>
+			</li>
+
+			<li>
+				<a href="{{ url_for('notifications') }}">
+					<i class='bx bx-bell'></i>
+					<span class="links_name">Notifications</span>
+				</a>
+				<span class="tooltip">Notifications</span>
+			</li>
+			<li>
+				<a href="{{ url_for('logout') }}">
+					<i class='bx bx-log-out'></i>
+					<span class="links_name">Logout</span>
+				</a>
+				<span class="tooltip">Logout</span>
+			</li>
+		</ul>
+	</div>
+	</ul>
+	</div>
+	<div class="content">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+
+</html>
