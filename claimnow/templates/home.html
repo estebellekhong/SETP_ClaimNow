@@ -5,31 +5,37 @@
 {% block content %}
 
 <div class="home-section">
-    <h1>Welcome Back! {{ username }} !</h1>
+    <h1>Welcome Back! {{ username }} ! </h1>
+    <div>
+        <h1>Using this page to test DB Query: </h1>
+    </div>
+    <div>
+        <h1>UserID : {{ userid }}</h1>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for current in claims %}
+                <tr>
+                    <td>{{ current.ClaimID }}</td>
+                    <td>{{ current.UserID}}</td>
+                    <td>{{ current.Current_Eligible }}</td>
+                    <td>{{ current.Claim_Category }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-<div class='summary-claim'>
-    <h1>Summary of Claims</h1>
-
-
-
-    {% for item in data %}
-    <tr>
-        <td>{{item[0]}}</td>
-        <td>{{item[1]}}</td>
-        <td>{{item[2]}}</td>
-        <td>{{item[3]}}</td>
-        <td>{{item[4]}}</td>
-        <td>{{item[5]}}</td>
-        <td>{{item[6]}}</td>
-        <td>{{item[7]}}</td>
-        <td>{{item[8]}}</td>
-        <td>{{item[9]}}</td>
-        <td>{{item[10]}}</td>
-
-
-    </tr>
-    {% endfor %}
-
 
 
 <!--Script for function-->
@@ -43,8 +49,6 @@
         menuBtnChange();//calling the function(optional)
     });
 
-
-
     // following are the code to change sidebar button(optional)
     function menuBtnChange() {
         if (sidebar.classList.contains("open")) {
@@ -53,6 +57,46 @@
             closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
         }
     }
+
+    function constructTable(selector) {
+        // Getting the all column names
+        var cols = Headers(list, selector);
+        // Traversing the JSON data
+        for (var i = 0; i < list.length; i++) {
+            var row = $('<tr/>');
+            for (var colIndex = 0; colIndex < cols.length; colIndex++) {
+                var val = list[i][cols[colIndex]];
+
+                // If there is any key, which is matching
+                // with the column name
+                if (val == null) val = "";
+                row.append($('<td/>').html(val));
+            }
+
+            // Adding each row to the table
+            $(selector).append(row);
+        }
+    }
+
+    function Headers(list, selector) {
+        var columns = [];
+        var header = $('<tr/>');
+
+        for (var i = 0; i < list.length; i++) {
+            var row = list[i];
+            for (var k in row) {
+                if ($.inArray(k, columns) == -1) {
+                    columns.push(k);
+
+                    // Creating the header
+                    header.append($('<th/>').html(k));
+                }
+            }
+        }
+
+        // Appending the header to the table
+        $(selector).append(header);
+        return columns;
+    }      
 </script>
-</div>
 {% endblock %}

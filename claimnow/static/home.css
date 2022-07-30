@@ -188,6 +188,17 @@
   overflow: hidden;
 }
 .sidebar.open li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
   width: 250px;
 }
 .sidebar li .profile-details{
@@ -228,6 +239,8 @@
   width: 50px;
   background: none;
 }
+
+
 
 /*===================Home Section================== */
 

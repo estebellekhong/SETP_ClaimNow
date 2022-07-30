@@ -6,7 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='localhost')
 
 # Change this to your secret key (can be anything, it's for extra protection)
 app.secret_key = 'your secret key'
@@ -26,7 +26,12 @@ def favicon():
     return app.send_static_file('/static/bg/favicon.ico')
 
 
-# http://localhost:5000/pythonlogin/ - the following will be our login page, which will use both GET and POST requests
+###################################
+##          Login/Logout         ##
+###################################
+
+# Landing page Login function
+# http://34.87.75.110:5000/claimnow
 @app.route('/claimnow/', methods=['GET', 'POST'])
 def login():
     # Output message if something goes wrong...
@@ -50,18 +55,20 @@ def login():
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
             session['id'] = account['Login_ID']
+            session['userid'] = account['UserID']
             session['username'] = account['Employee_Name']
+            session['designation'] = account['Department']
+         
             # Redirect to home page
             return redirect(url_for('home'))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
 
-    return render_template('index.html', msg='')
+    return render_template('index.html', msg=msg)
 
-# http://localhost:5000/python/logout - this will be the logout page
-
-
+# Logout function
+# http://34.87.75.110:5000/claimnow/logout
 @app.route('/claimnow/logout')
 def logout():
     # Remove session data, this will log the user out
@@ -71,25 +78,35 @@ def logout():
     # Redirect to login page
     return redirect(url_for('login'))
 
-# http://localhost:5000/pythinlogin/home - this will be the home page, only accessible for loggedin users
+##################################
+##          UI rederer          ##
+##################################
 
-
+# Home page 
+# only accessibe for loggedin user 
+# http://34.87.75.110:5000/claimnow/home
 @app.route('/claimnow/home')
 def home():
     # Check if user is loggedin
+   
     if 'loggedin' in session:
         # User is loggedin show them the home page
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD,  Foreign_Currency,  Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate,  Manager  FROM expense_claim WHERE UserID = %s',(session['id'],))
-        data = cursor.fetchall()
+        #cursor.execute('SELECT UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD,  Foreign_Currency,  Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate,  Manager  FROM expense_claim WHERE UserID = %s',(session['userid'],))
+        #data = cursor.fetchone()
 
-        return render_template('home.html', data=data)
+        # Fetch all data in claims table
+        #INNER JOIN status ON  expense_claim.StatusID=status.StatusID
+        cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
+        claims = cursor.fetchall()
+
+        return render_template('home.html', claims=claims,username=session['username'], designation=session['designation'],userid=session['userid'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-# http://localhost:5000/pythinlogin/profile - this will be the profile page, only accessible for loggedin users
-
-
+# Accessing profile page
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/profile 
 @app.route('/claimnow/profile')
 def profile():
     # Check if user is loggedin
@@ -104,54 +121,67 @@ def profile():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-
-# http://localhost:5000/pythinlogin/submitclaim - this will be the profile page, only accessible for loggedin users
-@app.route('/claimnow/submitclaim', methods=['GET', 'POST'])
+# Accessing SubmitClaim page
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/submitclaim
+@app.route('/claimnow/submitclaim')
 def submitclaim():
+    
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('submitclaim.html')
+        return render_template('submitclaim.html',username= session['username'], designation=session['designation'])
 
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-
-# http://localhost:5000/pythinlogin/history - this will be the profile page, only accessible for loggedin users
+# Accessing History page 
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/history - this will be the profile page, only accessible for loggedin users
 @app.route('/claimnow/history')
 def history():
     # Check if user is loggedin
     if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch all data in claims table
+        #INNER JOIN status ON  expense_claim.StatusID=status.StatusID
+        cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
+        claims = cursor.fetchall()
 
-        return render_template('history.html')
+        return render_template('history.html',claims=claims,username= session['username'], designation=session['designation'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-
-# http://localhost:5000/pythinlogin/notifications - this will be the profile page, only accessible for loggedin users
+# Accessing History page 
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/notifications - this will be the profile page, only accessible for loggedin users
 @app.route('/claimnow/notifications')
 def notifications():
     # Check if user is loggedin
     if 'loggedin' in session:
-
-        return render_template('notifications.html')
+        return render_template('notifications.html',username= session['username'], designation=session['designation'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
 
-@app.route('/add_record', methods=['GET', 'POST'])
-def add_record():
-    form1 = AddRecord()
-    if form1.validate_on_submit():
+######################################
+##          Core Functions          ##
+######################################
+# add claim record
+# Only accessible for loggedin users
+#@app.route('/add_record', methods=['GET', 'POST'])
+#def add_record():
+    #form1 = AddRecord()
+    #if form1.validate_on_submit():
       
     
-        record = Sock(name, style, color, quantity, price, updated)
+     #   record = Sock(name, style, color, quantity, price, updated)
         # Flask-SQLAlchemy magic adds record to database
-        db.session.add(record)
-        db.session.commit()
+     #   db.session.add(record)
+     #   db.session.commit()
         # create a message to send to the template
-        message = f"The data for sock {name} has been submitted."
+     #   message = f"The data for sock {name} has been submitted."
 
-        if request.method == 'POST':
+      #  if request.method == 'POST':
             ## UserID
             ## Claim_Category
             ## Country_of_Exp
@@ -173,35 +203,35 @@ def add_record():
                 # 5 = Rejected
                 # 6 = Paid
 
-            UserID = session['id']
-            Claim_Category = request.form['Claim_Category']
-            Country_of_Exp = request.form['primary']
-            Claim_Amount_SGD = request.form['Claim_Amount_SGD']
-            Foreign_Currency = request.form['Foreign_Currency']
-            Claim_Amount_FC = request.form['Claim_Amount_FC']
-            Forex = request.form['primary']
-            Claim_Desc = request.form['Claim_Desc']
-            Claim_Date = request.form['Claim_Date']
-            StatusID = 1
-            Date_LastUpdate = datetime.now()
+       #     UserID = session['id']
+       #     Claim_Category = request.form['Claim_Category']
+       #     Country_of_Exp = request.form['primary']
+       #     Claim_Amount_SGD = request.form['Claim_Amount_SGD']
+       #    Foreign_Currency = request.form['Foreign_Currency']
+       #     Claim_Amount_FC = request.form['Claim_Amount_FC']
+       #     Forex = request.form['primary']
+       #     Claim_Desc = request.form['Claim_Desc']
+       #     Claim_Date = request.form['Claim_Date']
+       #     StatusID = 1
+       #     Date_LastUpdate = datetime.now()
             
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+       #     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             
-            cursor.execute('SELECT Manager FROM user WHERE Login_ID = %s',(session['UserID'],))
-            account = cursor.fetchone() 
+       #     cursor.execute('SELECT Manager FROM user WHERE Login_ID = %s',(session['UserID'],))
+       #     account = cursor.fetchone() 
             
-            if account:
+       #     if account:
                 # Create session data, we can access this data in other routes
-                Manager = account['Manager']
+       #         Manager = account['Manager']
 
             #'INSERT INTO expense_claim (UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);', UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager
 
             # We need all the account info for the user so we can display it on the profile page
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('INSERT INTO expense_claim (UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);', UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager)
-            cursor.commit() 
+       #     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+       #     cursor.execute('INSERT INTO expense_claim (UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);', UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager)
+       #     cursor.commit() 
 
 
 
-    return render_template('add_record.html', message=message)
+   # return render_template('add_record.html', message=message)
 

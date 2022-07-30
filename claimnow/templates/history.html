@@ -5,11 +5,92 @@
 {% block content %}
 <div class="home-section">
   <h1>Claim History</h1>
+  <div class="containerp-30">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 main-datatable">
+        <div class="card_body">
+          <div class="row d-flex">
+            <div class="col-sm-4 createSegment">
+              <a href='submitclaim.html' class="btn dim_button create_new"> <span
+                  class="glyphicon glyphicon-plus"></span> Create New</a>
+            </div>
+            <div class="col-sm-8 add_flex">
+              <div class="form-group searchInput">
+                <label for="email">Search:</label>
+                <input type="search" class="form-control" id="filterbox" placeholder=" ">
+              </div>
+            </div>
+          </div>
+          <div class="overflow-x">
+            <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
+              <thead>
+                <tr>
+                  <th style="min-width:100px;">Claim Category</th>
+                  <th style="min-width:100px;">Claim Date</th>
+                  <th style="min-width:50px;">Currency Code</th>
+                  <th style="min-width:100px;">Expense Amount (Foreign Currency)</th>
+                  <th style="min-width:100px;">Expense Amount (SGD)</th>
+                  <th style="min-width:150px;">Description</th>
+                  <th style="min-width:100px;">Status</th>
+                  <th style="min-width:150px;">Action</th>
+                </tr>
+              </thead>
+              {% for current in claims %}
+              <tbody>
+                <tr>
+                  
+                  <td id="claim_category" name="claim_category">{{ current.Claim_Category }}</td>
+                  <td id="date" name="date">{{ current.Claim_Date}}</td>
+                  <td id="currency_code" name="currency_code">{{ current.Foreign_Currency}}</td>
+                  <td id="expense_forex" name="expense_forex">{{ current.Forex}}</td>
+                  <td id="expense_sgd" name="expense_sgd">{{ current.Claim_Amount_SGD}}</td>
+                  <td id="description" name="description">{{ current.Claim_Desc}}</td>
+                  <td><span class="mode mode_on">{{ current.StatusID}}</span></td>
+                  <td>
+                    <div class="btn-group">
+                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                        <i class="fa fa-pencil-square-o"></i> </a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a style="cursor: not-allowed; opacity:0.6">
+                            Edit
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="btn-group">
+                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <ul class="dropdown-menu dropdown_more">
+                        <li>
+                          <a style="cursor: not-allowed; opacity:0.6">
+                            <i class="fa fa-trash"></i> Delete
+                          </a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                
+              </tbody>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
 
 
-  
+
 </div>
 <!--Script for function-->
+<script src="{{ url_for('static', filename='history.js') }}"></script>
+
 <script>
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");

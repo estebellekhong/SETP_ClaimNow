@@ -8,6 +8,7 @@
 	<title>Login</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='loginform.css') }}">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='bg/favicon.ico') }}">
+
 </head>
 
 
@@ -43,13 +44,17 @@
 							<input type="checkbox" id="logCheck">
 							<label for="logCheck" class="text">Remember me</label>
 						</div>
+					</div>
+					<div>
+						<br>
+						<p style="color:red;">{{ msg }}</p>
 
-						<a href="#" class="text">Forgot password?</a>
 					</div>
 
 					<div class="input-field button">
 						<input input type="submit" value="Login">
 					</div>
+
 				</form>
 
 			</div>
