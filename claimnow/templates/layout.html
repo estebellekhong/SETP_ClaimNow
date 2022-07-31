@@ -54,7 +54,27 @@
 				</a>
 				<span class="tooltip">Claim History</span>
 			</li>
-
+			<li>
+				<a href="{{ url_for('approveclaims') }}">
+					<i class='bx bx-check'></i>
+					<span class="links_name">Approve Claims</span>
+				</a>
+				<span class="tooltip">Approve Claims</span>
+			</li>
+			<li>
+				<a href="{{ url_for('createuser') }}">
+					<i class='bx bx-user-plus'></i>
+					<span class="links_name">Add Employee</span>
+				</a>
+				<span class="tooltip">Add Employee</span>
+			</li>
+			<li>
+				<a href="{{ url_for('manageemployee') }}">
+					<i class='bx bx-table'></i>
+					<span class="links_name">Manage Employee</span>
+				</a>
+				<span class="tooltip">Manage Employee</span>
+			</li>
 			<li>
 				<a href="{{ url_for('notifications') }}">
 					<i class='bx bx-bell'></i>
@@ -62,21 +82,21 @@
 				</a>
 				<span class="tooltip">Notifications</span>
 			</li>
-			
+
 			<li class="profile">
 				<div class="profile-details">
-				  <!--<img src="profile.jpg" alt="profileImg">-->
-				  <div class="name_job">
-					<div class="name">{{ username }} </div>
-					<div class="job">{{ designation }} </div>
-				  </div>
+					<!--<img src="profile.jpg" alt="profileImg">-->
+					<div class="name_job">
+						<div class="name">{{ username }} </div>
+						<div class="job">{{ designation }} </div>
+					</div>
 				</div>
 				<a href="{{ url_for('logout') }}">
-					<i class='bx bx-log-out' id="log_out" ></i>
+					<i class='bx bx-log-out' id="log_out"></i>
 					<span class="links_name">Logout</span>
 				</a>
 				<span class="tooltip">Logout</span>
-				
+
 			</li>
 		</ul>
 	</div>

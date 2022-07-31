@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile Management{% endblock %}
+
+{% block content %}
+
+<!----------------------------------------------Dashboard for Admin---------------------------------------------->
+<div class="home-section">
+  <h1>Employee Record</h1>
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+
+    <br>
+
+    <table class="table" style="background-color:#FFFCDE">
+      <thead>
+        <tr style="background-color: #FEF7AE">
+          <th id="UserID" name="UserID">ID</th>
+          <th id="Employee_Name" name="Employee_Name">Employee Name</th>
+          <th id="Login_ID" name="Login_ID">Login ID</th>
+          <th id="Login_Password" name="Login_Password">Login Password</th>
+          <th id="Department" name="Department">Department</th>
+          <th id="Level" name="Level">Level</th>
+          <th id="Monthly_Eligible" name="Monthly_Eligible">Eligible Amount</th>
+          <th id="Manager" name="Manager">Manager</th>
+          <th id="Authority" name="Authority">User Rights</th>
+          <th id="Actions" name="Actions">Actions</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        {% for current in users %}
+        <tr>
+          <td>{{ current.UserID }}</td>
+          <td>{{ current.Employee_Name }}</td>
+          <td>{{ current.Login_ID }}</td>
+          <td>{{ current.Login_Password }}</td>
+          <td>{{ current.Department }}</td>
+          <td>{{ current.Level }}</td>
+          <td>{{ current.Monthly_Eligible }}</td>
+          <td>{{ current.Manager }}</td>
+          <td>{{ current.Authority }}</td>
+          <td>
+            <a class="btn3" href="#">Edit</a>
+            <a class="btn3" href="#">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+
+<!--Script for function-->
+<script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+  searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+    if (sidebar.classList.contains("open")) {
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    } else {
+      closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+    }
+  }
+</script>
+{% endblock %}

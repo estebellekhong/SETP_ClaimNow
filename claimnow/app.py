@@ -20,7 +20,6 @@ app.config['MYSQL_DB'] = 'ClaimNow'
 # Intialize MySQL
 mysql = MySQL(app)
 
-
 @app.route('/favicon.ico')
 def favicon():
     return app.send_static_file('/static/bg/favicon.ico')
@@ -104,20 +103,14 @@ def home():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-# Accessing profile page
+# Accessing approve claims page
 # Only accessible for loggedin users
-# http://34.87.75.110:5000/claimnow/profile 
-@app.route('/claimnow/profile')
-def profile():
+# http://34.87.75.110:5000/claimnow/approveclaims 
+@app.route('/claimnow/approveclaims')
+def approveclaims():
     # Check if user is loggedin
     if 'loggedin' in session:
-        # We need all the account info for the user so we can display it on the profile page
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM user WHERE Login_ID = %s',
-                       (session['id'],))
-        account = cursor.fetchone()
-        # Show the profile page with account info
-        return render_template('profile.html', account=account)
+        return render_template('approveclaims.html',username= session['username'], designation=session['designation'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -148,6 +141,35 @@ def history():
         claims = cursor.fetchall()
 
         return render_template('history.html',claims=claims,username= session['username'], designation=session['designation'])
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
+
+# Accessing Add employee page
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/createuser
+@app.route('/claimnow/createuser')
+def createuser():
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        return render_template('createuser.html',username= session['username'], designation=session['designation'])
+
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
+
+# Accessing Manage employee page
+# Only accessible for loggedin users
+# http://34.87.75.110:5000/claimnow/manageemployee
+@app.route('/claimnow/manageemployee')
+def manageemployee():
+    
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # Fetch all data in claims table
+        cursor.execute('SELECT * FROM user')
+        users = cursor.fetchall()
+        return render_template('manageemployee.html',users=users,username= session['username'], designation=session['designation'])
+
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 

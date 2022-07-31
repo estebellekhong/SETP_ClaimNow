@@ -1,0 +1,183 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile Management{% endblock %}
+
+{% block content %}
+<!------------------------ Claim History--------------------------->
+<div class="home-section">
+  <h1>Approve Claims</h1>
+
+
+<div class="col-md-1"></div>
+<div class="col-md-10">
+  <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
+    <thead>
+      <tr>
+        <th style="min-width:100px;">Claim Category</th>
+        <th style="min-width:100px;">Claim Date</th>
+        <th style="min-width:100px;">Submitted By</th>
+        <th style="min-width:100px;">Login ID</th>
+        <th style="min-width:150px;">Amount (SGD)</th>
+        <th style="min-width:100px;">Status</th>
+        <th style="min-width:150px;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="claim_category" name="claim_category">Hotel</td>
+        <td id="date" name="date">13/06/2022</td>
+        <td id="Employee_Name" name="Employee_Name">Wong KK</td>
+        <td id="Login_ID" name="Login_ID">kk.wong@seven-up.club</td>
+        <td id="expense_sgd" name="expense_sgd">815.38</td>
+
+        <td><span class="mode mode_process">Pending Approval</span></td>
+        <td>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-pencil-square-o"></i> </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#" target="_blank">
+                  Edit
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-ellipsis-h"></i>
+            </a>
+            <ul class="dropdown-menu dropdown_more">
+
+              <li>
+                <a href="#" target="_black">
+                  <i class="fa fa-check"></i> Approve
+                </a>
+                <a href="#" target="_black">
+                  <i class="fa fa-times"></i> Reject
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td id="claim_category" name="claim_category">Flight</td>
+        <td id="date" name="date">08/06/2022</td>
+        <td id="Employee_Name" name="Employee_Name">Wan Wee Kai</td>
+        <td id="Login_ID" name="Login_ID">weekai.wan@seven-up.club</td>
+        <td id="expense_sgd" name="expense_sgd">815.38</td>
+        <td><span class="mode mode_on">Approved</span></td>
+        <td>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-pencil-square-o"></i> </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  Edit
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-ellipsis-h"></i>
+            </a>
+            <ul class="dropdown-menu dropdown_more">
+
+              <li>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  <i class="fa fa-check"></i> Approve
+                </a>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  <i class="fa fa-times"></i> Reject
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td id="claim_category" name="claim_category">Transport</td>
+        <td id="date" name="date">07/06/2022</td>
+        <td id="Employee_Name" name="Employee_Name">Lim Rong Yi</td>
+        <td id="Login_ID" name="Login_ID">rongyi.lim@seven-up.club</td>
+        <td id="expense_sgd" name="expense_sgd">1250</td>
+        <td><span class="mode mode_off">Rejected</span></td>
+        <td>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-pencil-square-o"></i> </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  Edit
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+              <i class="fa fa-ellipsis-h"></i>
+            </a>
+            <ul class="dropdown-menu dropdown_more">
+
+              <li>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  <i class="fa fa-check"></i> Approve
+                </a>
+                <a style="cursor: not-allowed; opacity:0.6">
+                  <i class="fa fa-times"></i> Reject
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="col-md-1"></div>
+
+</div>
+
+
+
+
+<!--Script for function-->
+<script src="history.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.14/js/jquery.dataTables.min.js"></script>
+<script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+  searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+    if (sidebar.classList.contains("open")) {
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    } else {
+      closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+    }
+  }
+</script>
+{% endblock %}
