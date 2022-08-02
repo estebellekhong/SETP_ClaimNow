@@ -57,9 +57,12 @@ def login():
             session['userid'] = account['UserID']
             session['username'] = account['Employee_Name']
             session['designation'] = account['Department']
+            session['role'] = account['Authority']
          
             # Redirect to home page
-            return redirect(url_for('home'))
+            if session['role'] == "admin":
+                    return redirect(url_for('manageemployee',role=session['role']))
+            return redirect(url_for('home',role=session['role']))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -99,7 +102,7 @@ def home():
         cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
         claims = cursor.fetchall()
 
-        return render_template('home.html', claims=claims,username=session['username'], designation=session['designation'],userid=session['userid'])
+        return render_template('home.html', claims=claims,username=session['username'], designation=session['designation'],userid=session['userid'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -110,7 +113,7 @@ def home():
 def approveclaims():
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('approveclaims.html',username= session['username'], designation=session['designation'])
+        return render_template('approveclaims.html',username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -122,7 +125,7 @@ def submitclaim():
     
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('submitclaim.html',username= session['username'], designation=session['designation'])
+        return render_template('submitclaim.html',username= session['username'], designation=session['designation'],role=session['role'])
 
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
@@ -140,7 +143,7 @@ def history():
         cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
         claims = cursor.fetchall()
 
-        return render_template('history.html',claims=claims,username= session['username'], designation=session['designation'])
+        return render_template('history.html',claims=claims,username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -151,8 +154,7 @@ def history():
 def createuser():
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('createuser.html',username= session['username'], designation=session['designation'])
-
+        return render_template('createuser.html',username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -168,8 +170,7 @@ def manageemployee():
         # Fetch all data in claims table
         cursor.execute('SELECT * FROM user')
         users = cursor.fetchall()
-        return render_template('manageemployee.html',users=users,username= session['username'], designation=session['designation'])
-
+        return render_template('manageemployee.html',users=users,username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -180,7 +181,7 @@ def manageemployee():
 def notifications():
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('notifications.html',username= session['username'], designation=session['designation'])
+        return render_template('notifications.html',username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 

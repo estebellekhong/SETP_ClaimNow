@@ -32,6 +32,7 @@
 			<i class='bx bx-menu' id="btn"></i>
 		</div>
 		<ul class="nav-list">
+			{% if role != "admin" %}
 			<li>
 				<a href="{{ url_for('home') }}">
 					<i class='bx bx-grid-alt'></i>
@@ -39,6 +40,8 @@
 				</a>
 				<span class="tooltip">Overview</span>
 			</li>
+			{% endif %}
+			{% if role != "admin" %}
 			<li>
 				<a href="{{ url_for('submitclaim') }}">
 
@@ -47,6 +50,8 @@
 				</a>
 				<span class="tooltip">Submit Claim</span>
 			</li>
+			{% endif %}
+			{% if role != "admin" %}
 			<li>
 				<a href="{{ url_for('history') }}">
 					<i class='bx bx-history'></i>
@@ -54,6 +59,9 @@
 				</a>
 				<span class="tooltip">Claim History</span>
 			</li>
+			{% endif %}
+			{% if role == "Manager" %}
+			
 			<li>
 				<a href="{{ url_for('approveclaims') }}">
 					<i class='bx bx-check'></i>
@@ -61,6 +69,8 @@
 				</a>
 				<span class="tooltip">Approve Claims</span>
 			</li>
+			{% endif %}
+			{% if role == "admin" %}
 			<li>
 				<a href="{{ url_for('createuser') }}">
 					<i class='bx bx-user-plus'></i>
@@ -68,6 +78,8 @@
 				</a>
 				<span class="tooltip">Add Employee</span>
 			</li>
+			{% endif %}
+			{% if role == "admin" %}
 			<li>
 				<a href="{{ url_for('manageemployee') }}">
 					<i class='bx bx-table'></i>
@@ -75,6 +87,7 @@
 				</a>
 				<span class="tooltip">Manage Employee</span>
 			</li>
+			{% endif %}
 			<li>
 				<a href="{{ url_for('notifications') }}">
 					<i class='bx bx-bell'></i>
