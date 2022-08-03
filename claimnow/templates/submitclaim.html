@@ -7,7 +7,7 @@
 <div class="home-section">
   <h1>Submit a Claim</h1>
 
-  <form action="{{ url_for('submitclaim') }}" method="post">
+  <form  method="post">
     <div class="backgorund-container">
     <div class="row">
       <div class="col col-lg-1 ">
@@ -57,7 +57,7 @@
           <div class="input-group-lg">
             <div class="input-group-prepend">
               <textarea class="form-control" spellcheck="true" placeholder="Type something here..." required
-                id="Claim_Desc" name="Claim_Desc" rows="6"></textarea>
+                id="Claim_Desc" name="Claim_Desc" rows="8"></textarea>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
           </label>
           <div class="input-group-lg">
             <div class="input-group-prepend">
-              <input class="form-control" id="amount" type="text" id="Foreign_Currency" name="Foreign_Currency" />
+              <input class="form-control"  type="text" id="Foreign_Currency" name="Foreign_Currency" />
               </select>
             </div>
           </div>
@@ -117,7 +117,6 @@
           <p>
             <span id="txt-primary"></span>
             <span id="txt-secondary"></span>
-            <span id="conversion_rate" name="conversion_rate"></span>
           </p>
         </div>
 
@@ -142,8 +141,18 @@
             </div>
           </div>
         </div>
-        <br>
-        <br>
+        
+        <div class="row">
+          <label for="basic-url">
+            <h3>Conversion Rate</h3>
+          </label>
+          <div class="input-group-lg">
+            <div class="input-group-prepend">
+              <input class="form-control" type="text" id="conversion_rate" name="conversion_rate">
+            </div>
+          </div>
+        </div>
+
         <br>
         <div class="row">
           <div class="input-group-lg">
@@ -342,7 +351,7 @@
   function fetchCurrencies() {
     const primary = primaryCurrency.value;
     const secondary = secondaryCurrency.value;
-    const amount = document.getElementById("amount").value;
+    const amount = document.getElementById("Foreign_Currency").value;
     const fc = document.getElementById("Claim_Amount_FC").value;
     // Important: Include your API key below
     fetch("https://v6.exchangerate-api.com/v6/10e6be3a3cbd346c984a5c01/latest/" + primary)

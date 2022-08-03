@@ -1,3 +1,4 @@
+from tokenize import String
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
@@ -48,7 +49,6 @@ def login():
             'SELECT * FROM user WHERE Login_ID = %s AND Login_Password = %s', (username, password,))
         # Fetch one record and return result
         account = cursor.fetchone()
-
         # If account exists in accounts table in out database
         if account:
             # Create session data, we can access this data in other routes
@@ -94,12 +94,10 @@ def home():
     if 'loggedin' in session:
         # User is loggedin show them the home page
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        #cursor.execute('SELECT UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD,  Foreign_Currency,  Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate,  Manager  FROM expense_claim WHERE UserID = %s',(session['userid'],))
-        #data = cursor.fetchone()
 
         # Fetch all data in claims table
-        #INNER JOIN status ON  expense_claim.StatusID=status.StatusID
-        cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
+        cursor.execute('SELECT * FROM expense_claim LEFT JOIN status ON status.StatusID=expense_claim.StatusID')
+        #cursor.execute(query)
         claims = cursor.fetchall()
 
         return render_template('home.html', claims=claims,username=session['username'], designation=session['designation'],userid=session['userid'],role=session['role'])
@@ -120,11 +118,44 @@ def approveclaims():
 # Accessing SubmitClaim page
 # Only accessible for loggedin users
 # http://34.87.75.110:5000/claimnow/submitclaim
-@app.route('/claimnow/submitclaim')
+@app.route('/claimnow/submitclaim', methods=['GET', 'POST'])
 def submitclaim():
-    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     # Check if user is loggedin
     if 'loggedin' in session:
+        
+        if request.method == 'POST':
+            ## statusid
+                # 1 = New
+                # 2 = Submitted
+                # 3 = Deleted
+                # 4 = Approved
+                # 5 = Rejected
+                # 6 = Paid
+            
+            Claim_Category = request.form['Claim_category']
+            Country_of_Exp = request.form['Expense_Country']
+            Claim_Amount_SGD = request.form['Claim_Amount_SGD']
+            Foreign_Currency = request.form['primary']
+            Claim_Amount_FC = request.form['Claim_Amount_FC']
+            Forex = request.form['conversion_rate']
+            Claim_Desc = request.form['Claim_Desc']
+            Claim_Date = request.form['Claim_Date']
+            UserID = session['userid']
+            StatusID = 1
+            cursor.execute('SELECT Manager FROM user WHERE Login_ID = %s',(session['userid'],))
+            account = cursor.fetchone() 
+            
+            if account:
+                # Get Manager of current login User
+                Manager = account['Manager']
+            else:
+                Manager=" "
+
+            #'INSERT INTO expense_claim (UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);', UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Date_LastUpdate, Manager
+            cursor.execute('INSERT INTO expense_claim (UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',(UserID, Claim_Category, Country_of_Exp, Claim_Amount_SGD, Foreign_Currency, Claim_Amount_FC, Forex, Claim_Desc, Claim_Date, StatusID, Manager))
+            mysql.connection.commit()
+            return redirect(url_for('history',username= session['username'], designation=session['designation'],role=session['role']))
         return render_template('submitclaim.html',username= session['username'], designation=session['designation'],role=session['role'])
 
     # User is not loggedin redirect to login page
@@ -139,8 +170,7 @@ def history():
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         # Fetch all data in claims table
-        #INNER JOIN status ON  expense_claim.StatusID=status.StatusID
-        cursor.execute('SELECT * FROM expense_claim where UserID=%s',(session['userid'],))
+        cursor.execute('SELECT * FROM expense_claim LEFT JOIN status ON expense_claim.StatusID=status.StatusID  WHERE expense_claim.UserID=%s',(session['userid'],))
         claims = cursor.fetchall()
 
         return render_template('history.html',claims=claims,username= session['username'], designation=session['designation'],role=session['role'])
@@ -150,10 +180,40 @@ def history():
 # Accessing Add employee page
 # Only accessible for loggedin users
 # http://34.87.75.110:5000/claimnow/createuser
-@app.route('/claimnow/createuser')
+@app.route('/claimnow/createuser', methods=['GET', 'POST'])
 def createuser():
     # Check if user is loggedin
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'loggedin' in session:
+        if request.method == 'POST':
+            # Retrieve data from User Creation Form
+            Employee_Name=request.form['Employee_Name']
+            Login_ID=request.form['Login_ID']
+            Login_Password=request.form['password']
+            Department=request.form['Department']
+            Level=request.form['Level']
+            Monthly_Eligible=request.form['Monthly_Eligible']
+            Authority=request.form['Authority']
+            Date_Created=datetime.now()
+            
+            # Identified Direct Manager
+            if Level==0:
+                Manager="Wong KK"
+            elif Level==1:
+                    Manager = Employee_Name
+            else:
+                #Get department manager
+                cursor.execute('SELECT Employee_Name FROM user WHERE Authority="Manager" AND Department="%s"',(Department,))
+                Manager = cursor.fetchone()
+                if Manager is None:
+                    Manager = "Wong KK"
+                    
+            # Insert User Record      
+            cursor.execute("INSERT INTO user (Employee_Name, Login_ID, Login_Password, Department, Level, Monthly_Eligible, Authority, Manager) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(Employee_Name,Login_ID,Login_Password,Department, Level, Monthly_Eligible,Authority,Manager,))
+            #print("INSERT INTO user (UserID, Employee_Name, Login_ID, Login_Password, Department, Level, Monthly_Eligible, Authority, Manager, Date_Created ) VALUES ("+str(id)+","+Employee_Name+","+Login_ID+","+Login_Password+","+Department+","+str(Level)+","+str(Monthly_Eligible)+","+Authority+","+Manager+","+str(Date_Created)+")")
+            mysql.connection.commit()
+
+            return redirect(url_for('manageemployee',Manager=Manager,Department=Department,username= session['username'], designation=session['designation'],role=session['role']))
         return render_template('createuser.html',username= session['username'], designation=session['designation'],role=session['role'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
