@@ -7,142 +7,66 @@
 <div class="home-section">
   <h1>Approve Claims</h1>
 
+  <div class="containerp-30">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 main-datatable">
+        <div class="card_body">
+          <br>
+          <div class="overflow-x">
+            <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
+              <thead>
+                <tr>
+                  <th style="min-width:100px;">Claim ID</th>
+                  <th style="min-width:100px;">Claim Category</th>
+                  <th style="min-width:100px;">Claim Date</th>
+                  <th style="min-width:50px;">Currency Code</th>
+                  <th style="min-width:100px;">Expense Amount (Foreign Currency)</th>
+                  <th style="min-width:100px;">Expense Amount (SGD)</th>
+                  <th style="min-width:150px;">Description</th>
+                  <th style="min-width:100px;">Status</th>
+                  <th style="min-width:150px;">Action</th>
+                </tr>
+              </thead>
 
-<div class="col-md-1"></div>
-<div class="col-md-10">
-  <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
-    <thead>
-      <tr>
-        <th style="min-width:100px;">Claim Category</th>
-        <th style="min-width:100px;">Claim Date</th>
-        <th style="min-width:100px;">Submitted By</th>
-        <th style="min-width:100px;">Login ID</th>
-        <th style="min-width:150px;">Amount (SGD)</th>
-        <th style="min-width:100px;">Status</th>
-        <th style="min-width:150px;">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td id="claim_category" name="claim_category">Hotel</td>
-        <td id="date" name="date">13/06/2022</td>
-        <td id="Employee_Name" name="Employee_Name">Wong KK</td>
-        <td id="Login_ID" name="Login_ID">kk.wong@seven-up.club</td>
-        <td id="expense_sgd" name="expense_sgd">815.38</td>
+              <tbody>
+                {% for current in claims %}
 
-        <td><span class="mode mode_process">Pending Approval</span></td>
-        <td>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-pencil-square-o"></i> </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#" target="_blank">
-                  Edit
-                </a>
-              </li>
-            </ul>
+                <tr>
+
+                  <td type="hidden" id="id" name="id">{{ current.ClaimID }}
+                  <td id="claim_category" name="claim_category">{{ current.Claim_Category }}</td>
+                  <td id="date" name="date">{{ current.Claim_Date }}</td>
+                  <td id="currency_code" name="currency_code">{{ current.Foreign_Currency }}</td>
+                  <td id="expense_forex" name="expense_forex">{{ current.Claim_Amount_FC }}</td>
+                  <td id="expense_sgd" name="expense_sgd">{{ current.Claim_Amount_SGD }}</td>
+                  <td id="description" name="description">{{ current.Claim_Desc }}</td>
+                  <td id="status" name="status"><span class="mode mode_on">{{ current.Status_Desc }}</span></td>
+                  <td>
+                      <form action="{{ url_for('editclaim') }}" method="POST">
+                        <input type="hidden" name="ClaimID" id="Claim_ID" value="{{ current.ClaimID }}" />
+                        <button class="btn-primary" type="submit">Edit</button>
+                      </form>
+                      <form action="{{ url_for('approve') }}" method="POST">
+                        <input type="hidden" name="ClaimID" id="Claim_ID" value="{{ current.ClaimID }}" />
+                        <button class="btn-success" type="submit">Approve</button>
+                      </form>
+                      <form action="{{ url_for('reject') }}" method="POST">
+                        <input type="hidden" name="ClaimID" id="Claim_ID" value="{{ current.ClaimID }}" />
+                        <button class="btn-danger" type="submit">Reject</button>
+                      </form>
+                  </td>
+                  {% endfor %}
+              </tbody>
+
+            </table>
           </div>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-ellipsis-h"></i>
-            </a>
-            <ul class="dropdown-menu dropdown_more">
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
 
-              <li>
-                <a href="#" target="_black">
-                  <i class="fa fa-check"></i> Approve
-                </a>
-                <a href="#" target="_black">
-                  <i class="fa fa-times"></i> Reject
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td id="claim_category" name="claim_category">Flight</td>
-        <td id="date" name="date">08/06/2022</td>
-        <td id="Employee_Name" name="Employee_Name">Wan Wee Kai</td>
-        <td id="Login_ID" name="Login_ID">weekai.wan@seven-up.club</td>
-        <td id="expense_sgd" name="expense_sgd">815.38</td>
-        <td><span class="mode mode_on">Approved</span></td>
-        <td>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-pencil-square-o"></i> </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  Edit
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-ellipsis-h"></i>
-            </a>
-            <ul class="dropdown-menu dropdown_more">
-
-              <li>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  <i class="fa fa-check"></i> Approve
-                </a>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  <i class="fa fa-times"></i> Reject
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td id="claim_category" name="claim_category">Transport</td>
-        <td id="date" name="date">07/06/2022</td>
-        <td id="Employee_Name" name="Employee_Name">Lim Rong Yi</td>
-        <td id="Login_ID" name="Login_ID">rongyi.lim@seven-up.club</td>
-        <td id="expense_sgd" name="expense_sgd">1250</td>
-        <td><span class="mode mode_off">Rejected</span></td>
-        <td>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-pencil-square-o"></i> </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  Edit
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="btn-group">
-            <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-              <i class="fa fa-ellipsis-h"></i>
-            </a>
-            <ul class="dropdown-menu dropdown_more">
-
-              <li>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  <i class="fa fa-check"></i> Approve
-                </a>
-                <a style="cursor: not-allowed; opacity:0.6">
-                  <i class="fa fa-times"></i> Reject
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </td>
-      </tr>
-
-    </tbody>
-  </table>
 </div>
 <div class="col-md-1"></div>
 
@@ -166,10 +90,6 @@
     menuBtnChange();//calling the function(optional)
   });
 
-  searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
-    sidebar.classList.toggle("open");
-    menuBtnChange(); //calling the function(optional)
-  });
 
   // following are the code to change sidebar button(optional)
   function menuBtnChange() {

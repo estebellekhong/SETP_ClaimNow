@@ -37,31 +37,14 @@
                   <td id="description" name="description">{{ current.Claim_Desc }}</td>
                   <td id="status" name="status"><span class="mode mode_on">{{ current.Status_Desc }}</span></td>
                   <td>
-                    <div class="btn-group">
-                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-                        <i class="fa fa-pencil-square-o"></i> </a>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a style="cursor: not-allowed; opacity:0.6">
-                            Edit
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="btn-group">
-                      <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
-                        <i class="fa fa-ellipsis-h"></i>
-                      </a>
-                      <ul class="dropdown-menu dropdown_more">
-                        <li>
-                          <a style="cursor: not-allowed; opacity:0.6">
-                            <i class="fa fa-trash"></i> Delete
-                          </a>
-                        </li>
-
-                      </ul>
-                    </div>
-                  </td>
+                    <form action="{{ url_for('editclaim') }}" method="POST">
+                      <input type="hidden" name="ClaimID" id="Claim_ID" value="{{ current.ClaimID }}" />
+                      <button class="btn-primary" type="submit">Edit</button>
+                    </form>
+                    <form action="{{ url_for('deleteclaim') }}" method="POST">
+                      <input type="hidden" name="ClaimID" id="Claim_ID" value="{{ current.ClaimID }}" />
+                      <button class="btn-success" type="submit">Delete</button>
+                    </form>
                 </tr>
                 
               </tbody>

@@ -3,45 +3,90 @@
 {% block title %}Profile Management{% endblock %}
 
 {% block content %}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <div class="home-section">
-    <h1>Welcome Back! {{ username }} ! </h1>
+    <h1>Welcome back, {{ username }} ! </h1>
     <div>
-        <h1>Using this page to test DB Query: </h1>
+        <h1>Your Summary of Claims </h1>
     </div>
-    <div>
+    <!-- <div>
         <h1>UserID : {{ userid }}</h1>
-    </div>
-    <div>
-        <table>
+    </div> -->
+    <div class="col-md-10">
+        <H3>Eligibility: {{ Eligible }} SGD</H3>
+        <H3>Remaining: {{ remaining }} SGD</H3>
+        <table class="table cust-datatable dataTable no-footer">
             <thead>
                 <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
+                    <th style="min-width:100px;">Claim Id</th>
+                    <th style="min-width:100px;">Claim Category</th>
+                    <th style="min-width:100px;">Claim Amount (SGD)</th>
                 </tr>
             </thead>
             <tbody>
 
                 {% for current in claims %}
                 <tr>
-                    <td>{{ current.ClaimID }}</td>
-                    <td>{{ current.UserID}}</td>
-                    <td>{{ current.Current_Eligible }}</td>
-                    <td>{{ current.Claim_Category }}</td>
-                    <td>{{ current.StatusID }}</td>
-                    <td>{{ current.Status_Desc }}</td>
-
+                    <!-- <td>{{ current.ClaimID }}</td>
+                    <td>{{ current.UserID}}</td> -->
+                    <td id="claimid" name="claimid">{{ current.ClaimID }}</td>
+                    <td id="claim_category" name="claim_category">{{ current.Claim_Category }}</td>
+                    <td id="expense_sgd" name="expense_sgd">{{ current.Claim_Amount_SGD }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+    </div>
+
+    <div class="doughnut">
+
+        <div class="col-md-3"></div>
+        <canvas id="myChart" style="width:100%;max-width:960px"></canvas>
+
+        <script>
+            var xValues = ["Utilized", "Available"];
+            var yValues = [550, 1450];
+            var barColors = [
+                "#1A5FB8",
+                "#1AB88F"
+            ];
+
+            new Chart("myChart", {
+                type: "doughnut",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return "$" + yValues
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: "My Claims Overview"
+                    }
+                }
+            });
+        </script>
+        <div class="col-md-3"></div>
+
     </div>
 </div>
-
-
 <!--Script for function-->
+<script>
+    let n = num.round(2);
+    document.getElementById("expense_sgd").innerHTML = n;
+    document.getElementById("Current_Eligible").innerHTML = n;
+    document.getElementById("remaining").innerHTML = n;
+</script>
+
 <script>
     let sidebar = document.querySelector(".sidebar");
     let closeBtn = document.querySelector("#btn");

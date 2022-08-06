@@ -27,7 +27,7 @@
           <th id="Actions" name="Actions">Actions</th>
         </tr>
       </thead>
-      
+
       <tbody>
         {% for current in users %}
         <tr>
@@ -41,8 +41,14 @@
           <td>{{ current.Manager }}</td>
           <td>{{ current.Authority }}</td>
           <td>
-            <a class="btn3" href="#">Edit</a>
-            <a class="btn3" href="#">Delete</a>
+            <form action="{{ url_for('edituserpage') }}" method="POST">
+              <input type="hidden" name="UserID" id="UserID" value="{{ current.UserID }}" />
+              <button class="btn-primary btn-sm" type="submit">Edit</button>
+            </form>
+            <form action="{{ url_for('deleteemployee') }}" method="POST">
+              <input type="hidden" name="UserID" id="UserID" value="{{ current.UserID }}" />
+              <button class="btn-danger btn-sm" type="submit">Delete</button>
+            </form>
           </td>
         </tr>
         {% endfor %}

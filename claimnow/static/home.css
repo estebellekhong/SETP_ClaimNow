@@ -689,4 +689,10 @@ form button:hover{
 }
 
 
+/*===================Doughnut chart ============ */
+.doughnut{
+  z-index: 30;
+  position: relative;
+  margin-top: 50px ;
+}
 

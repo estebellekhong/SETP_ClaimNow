@@ -4,32 +4,36 @@
 
 {% block content %}
 
-  <div class="home-section">
-    <h1>Notifications</h1>
-  </div>
-  
- 
+<div class="home-section">
+  <h1>Notifications</h1>
 
-  <!--Script for function-->
-  <script>
-            let sidebar = document.querySelector(".sidebar");
-            let closeBtn = document.querySelector("#btn");
-            let searchBtn = document.querySelector(".bx-search");
+  <br>
+  <br>
 
-            closeBtn.addEventListener("click", ()=>{
-                sidebar.classList.toggle("open");
-                menuBtnChange();//calling the function(optional)
-            });
+  <h1>Notification feature will be live in the next release !!</h1>
+</div>
 
-            // following are the code to change sidebar button(optional)
-            function menuBtnChange() {
-            if(sidebar.classList.contains("open")){
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-            }else {
-                closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-            }
-            }
-  </script>
+
+
+<!--Script for function-->
+<script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+    if (sidebar.classList.contains("open")) {
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    } else {
+      closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+    }
+  }
+</script>
 
 {% endblock %}
-

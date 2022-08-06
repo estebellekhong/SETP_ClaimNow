@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile Management{% endblock %}
+
+{% block content %}
+<!----------------------------------------------Dashboard for Admin---------------------------------------------->
+<div class="home-section">
+    <h1>Create Employee Record</h1>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div>
+
+            <p>Please fill in the required fields below</p>
+            <br>
+
+            <form action="{{ url_for('editemployee') }}"  method="post">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="item">
+                            <label class="control-label" for="Employee_Name">Full Name <span class="required">*</span>
+                            </label>
+                            <input id="UserID" class="form-control" name="UserID" value="{{ user.UserID }}"
+                                type="hidden" />
+                            <input id="Employee_Name" class="form-control" name="Employee_Name"
+                                value="{{ user.Employee_Name }}" required="required" type="text" />
+                        </div>
+                        <br>
+                        <div class="item form-group">
+                            <label class="control-label" for="Login_ID">Login ID (Email) <span class="required">*</span>
+                            </label>
+                            <div>
+                                <input id="Login_ID" class="form-control" name="Login_ID" value="{{ user.Login_ID }}" />
+                            </div>
+                        </div>
+                        <br>
+                        <div class="item form-group">
+                            <label for="password" class="control-label">Password</label>
+                            <div>
+                                <input id="password" type="password" name="password" data-validate-length="6,8"
+                                    class="form-control" required="required" value="{{ user.Login_Password }}"> 
+                            </div>
+                        </div>
+                        <br>
+                        <div class="item form-group">
+                            <label for="password2" class="control-label">Repeat
+                                Password</label>
+                            <div>
+                                <input id="password2" type="password" name="password2" data-validate-linked="password"
+                                    class="form-control" required="required" value="{{ user.Login_Password }}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="item form-group">
+                            <label class="control-label" for="department">Department <span class="required">*</span>
+                            </label>
+                            <div>
+                                <input id="Department" class="form-control" name="Department" value="{{ user.Department }}" />
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label" for="Level">User
+                                Rights Level <span class="required">*</span>
+                            </label>
+                            <div>
+                                <input id="Level" class="form-control" name="Level" value="{{ user.Level }}" />
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label" for="Monthly_Eligible">Monthly Eligible
+                                <span class="required">*</span>
+                            </label>
+                            <div>
+                                <input id="Monthly_Eligible" class="form-control" name="Monthly_Eligible" value="{{ user.Monthly_Eligible }}" />
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label" for="Authority">User Rights <span class="required">*</span>
+                            </label>
+                            <div>
+                                <input id="Authority" class="form-control" name="Authority" value="{{ user.Authority }}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn-warning">Edit User</button>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+
+<!--Script for function-->
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+        } else {
+            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+        }
+    }
+</script>
+{% endblock %}
