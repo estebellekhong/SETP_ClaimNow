@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<!--Nav Icon & Menu-->
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus icon'></i>
+        <div class="logo_name">ClaimNow</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      
+      <li>
+        <a href="admin-createuser.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Create User</span>
+        </a>
+        <span class="tooltip">Create User</span>
+      </li>
+    
+      <li>
+        <a href="admin-employee.html">
+          <i class='bx bx-table' ></i>
+          <span class="links_name">View Employee Record</span>
+        </a>
+        <span class="tooltip">View Employee Record</span>
+      </li>
+
+     <li>
+        <a href="notifications.html">
+          <i class='bx bx-bell' ></i>
+          <span class="links_name">Notifications</span>
+        </a>
+        <span class="tooltip">Notifications</span>
+      </li> 
+      
+     <li class="profile">
+         <div class="profile-details">
+           <!--<img src="profile.jpg" alt="profileImg">-->
+           <div class="name_job">
+             <div class="name">Username</div>
+             <div class="job">Designation</div>
+           </div>
+         </div>
+         <i class='bx bx-log-out' id="log_out" ></i>
+     </li>
+    </ul>
+  </div>
+
+ 
+<!----------------------------------------------Dashboard for Admin---------------------------------------------->
+<div class="home-section">
+    <h1>Employee Record</h1>
+</div>
+
+    <div class="container my-5">
+        <a class="btn2" href="admin-createuser.html" role="button">Create Record</a>
+        <br>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th id="UserID" name="UserID">ID</th>
+                    <th id="Employee_Name" name="Employee_Name">Employee Name</th>
+                    <th id="Login_ID" name="Login_ID">Login ID</th>
+                    <th id="Login_Password" name="Login_Password">Login Password</th>
+                    <th id="Department" name="Department">Department</th>
+                    <th id="Level" name="Level">Level</th>
+                    <th id="Monthly_Eligible" name="Monthly_Eligible">Eligible Amount</th>
+                    <th id="Manager" name="Manager">Manager</th>
+                    <th id="Authority" name="Authority">User Rights</th>
+                    <th id="Actions" name="Actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Admin</td>
+                    <td>admin@seven-up.club</td>
+                    <td>admin123</td>
+                    <td>System Admin</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Wong KK</td>
+                    <td>Admin</td>
+                    <td>
+                        <a class="btn3" href="#">Edit</a>
+                        <a class="btn3" href="#">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Wong KK</td>
+                    <td>wongkk@seven-up.club</td>
+                    <td>password123</td>
+                    <td>Managing Director</td>
+                    <td>1</td>
+                    <td>20000</td>
+                    <td>Wong KK</td>
+                    <td>Manager</td>
+                    <td>
+                        <a class="btn3" href="#">Edit</a>
+                        <a class="btn3" href="#">Delete</a>
+                    </td>
+                </tr>
+                <tr> 
+                    <td>3</td>
+                    <td>Estebelle Khong</td>
+                    <td>estebelle@seven-up.club</td>
+                    <td>password123</td>
+                    <td>Human Resources</td>
+                    <td>2</td>
+                    <td>2000</td>
+                    <td>Wong KK</td>
+                    <td>Manager</td>
+                    <td>
+                        <a class="btn3" href="#">Edit</a>
+                        <a class="btn3" href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+  <!--Script for function-->
+  <script>
+            let sidebar = document.querySelector(".sidebar");
+            let closeBtn = document.querySelector("#btn");
+            let searchBtn = document.querySelector(".bx-search");
+
+            closeBtn.addEventListener("click", ()=>{
+                sidebar.classList.toggle("open");
+                menuBtnChange();//calling the function(optional)
+            });
+
+            searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            });
+
+            // following are the code to change sidebar button(optional)
+            function menuBtnChange() {
+            if(sidebar.classList.contains("open")){
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            }else {
+                closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+            }
+            }
+  </script>
+
+</body>
+</html>
+
