@@ -5,7 +5,7 @@
 {% block content %}
 <!----------------------------------------------Dashboard for Admin---------------------------------------------->
 <div class="home-section">
-    <h1>Create Employee Record</h1>
+    <h1>Edit Employee Record</h1>
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <div>
@@ -13,7 +13,7 @@
             <p>Please fill in the required fields below</p>
             <br>
 
-            <form action="{{ url_for('editemployee') }}"  method="post">
+            <form action="{{ url_for('editemployee') }}"  method="post" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
@@ -30,7 +30,7 @@
                             <label class="control-label" for="Login_ID">Login ID (Email) <span class="required">*</span>
                             </label>
                             <div>
-                                <input id="Login_ID" class="form-control" name="Login_ID" value="{{ user.Login_ID }}" />
+                                <input type="email" pattern=".+@seven-up.club" class="form-control" name="Login_ID" value="{{ user.Login_ID }}" />
                             </div>
                         </div>
                         <br>

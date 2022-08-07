@@ -13,7 +13,7 @@
             <p>Please fill in the required fields below</p>
             <br>
 
-            <form method="post">
+            <form method="post" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
                 <div class="row">
                 <div class="col-md-1"></div>
                     <div class="col-md-5">
@@ -28,7 +28,7 @@
                             <label class="control-label" for="Login_ID">Login ID (Email) <span class="required">*</span>
                             </label>
                             <div>
-                                <input type="Login_ID" id="Login_ID" name="Login_ID" data-validate-linked="email"
+                                <input type="email" pattern=".+@seven-up.club" id="Login_ID" name="Login_ID" placeholder="Jon@seven-up.club" data-validate-linked="email"
                                     required="required" class="form-control ">
                             </div>
                         </div>
