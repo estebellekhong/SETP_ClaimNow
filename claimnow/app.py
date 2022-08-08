@@ -141,7 +141,7 @@ def approveclaims():
         
         # Fetch all data in expense_claim table by logged in manager
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM expense_claim LEFT JOIN status ON expense_claim.StatusID=status.StatusID  WHERE expense_claim.Manager=%s',(session['username'],))
+        cursor.execute('SELECT user.Employee_name, expense_claim.*, status.Status_Desc FROM expense_claim LEFT JOIN status ON expense_claim.StatusID = status.StatusID LEFT JOIN user ON expense_claim.UserID = user.UserID WHERE expense_claim.Manager=%s',(session['username'],))
         claims = cursor.fetchall()
 
         # render HTML UI elements based on approveclaims.html

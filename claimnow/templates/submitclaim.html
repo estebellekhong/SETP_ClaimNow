@@ -376,7 +376,7 @@
     document.getElementById("txt-primary").innerText = amount + " " + primary + " = ";
     document.getElementById("conversion_rate").value = forex;
     document.getElementById("txt-secondary").innerText = calculated + " " + secondary;
-    document.getElementById("Claim_Amount_SGD").value = calculated;
+    document.getElementById("Claim_Amount_SGD").value = calculated.toFixed(2);
     document.getElementById("Claim_Amount_FC").value = amount;
   }
 

@@ -17,6 +17,7 @@
             <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
               <thead>
                 <tr>
+                  <th style="min-width:100px;">Submitted By</th>
                   <th style="min-width:100px;">Claim ID</th>
                   <th style="min-width:100px;">Claim Category</th>
                   <th style="min-width:100px;">Claim Date</th>
@@ -33,7 +34,7 @@
                 {% for current in claims %}
 
                 <tr>
-
+                  <td type="Employee_Name" id="Employee_Name" name="Employee_Name">{{ current.Employee_name }}
                   <td type="hidden" id="id" name="id">{{ current.ClaimID }}
                   <td id="claim_category" name="claim_category">{{ current.Claim_Category }}</td>
                   <td id="date" name="date">{{ current.Claim_Date }}</td>
